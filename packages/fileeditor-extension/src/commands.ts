@@ -253,15 +253,27 @@ export namespace Commands {
           );
           return;
         }
+        console.log("Entering suspicious senction");
         const style = window.getComputedStyle(document.documentElement);
+        console.log("STYLE!");
+        console.log(`${style}`);
         const cssSize = parseInt(
           style.getPropertyValue('--jp-code-font-size'),
           10
         );
         const currentSize =
-          (config['customStyles']['fontSize'] ??
-            extensions.baseConfiguration['customStyles']['fontSize']) ||
+          (config['customStyles']?.fontSize ??
+            extensions.baseConfiguration['customStyles']?.fontSize) ||
           cssSize;
+
+        // const currentSize =
+        //   (config['customStyles']['fontSize'] ??
+        //     extensions.baseConfiguration['customStyles']['fontSize']) ||
+        //   cssSize;
+        console.log(`${config['customStyles']?.fontSize}`)
+        if (config.fontSize == null) {
+          config.fontSize = currentSize;
+        }
         config.fontSize = currentSize + delta;
         return settingRegistry
           .set(id, 'editorConfig', config)
@@ -1419,3 +1431,4 @@ export namespace Commands {
     });
   }
 }
+
